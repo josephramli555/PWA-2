@@ -1,0 +1,19 @@
+{
+    "name": "Ultimate Football App",
+    "short_name": "Football App",
+    "description": "Best Football APp",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#FF0000",
+    "theme_color": "#FF0000",
+     "gcm_sender_id": "853911714257",
+    "icons": [
+        {
+            "src": "icon.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]  
+    
+}
+

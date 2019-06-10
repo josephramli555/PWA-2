@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>News Reader</title>
+    <meta name="description" content="Ultimate English League App" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="css/materialize.min.css" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#00897B" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Navigasi -->
+    <nav class="red darken-4" role="navigation">
+      <div class="nav-wrapper container">
+        <ul class="left">
+          <a href="index.html">Back</a>
+        </ul>
+        <a href="#" class="brand-logo center" id="logo-container">Ultimate English League App</a>
+        <a href="#" class="sidenav-trigger" data-target="nav-mobile">&#9776;</a>
+
+        <ul class="topnav right hide-on-med-and-down"></ul>
+        <ul class="sidenav" id="nav-mobile"></ul>
+      </div>
+    </nav>
+    <!-- Akhir Navigasi -->
+
+    <div class="container col s12" id="body-content">
+      
+     
+    </div>
+     <div class="fixed-action-btn">
+       <a class="btn-floating btn-large blue" id="savebtn">
+          <i class="large material-icons">save</i>
+      </a>
+      <a class="btn-floating btn-large blue" id="delbtn">
+          <i class="large material-icons">delete</i>
+      </a>
+     </div> 
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/snarkdown@1.0.2/dist/snarkdown.umd.js"
+    ></script>
+    <script src="js/materialize.min.js"></script>
+    <script src="js/idb.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/dbmanager.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function() {
+          navigator.serviceWorker
+            .register("/service-worker.js")
+            .then(function() {
+              console.log("Pendaftaran ServiceWorker berhasil");
+            })
+            .catch(function() {
+              console.log("Pendaftaran ServiceWorker gagal");
+            });
+        });
+      } else {
+        console.log("ServiceWorker belum didukung browser ini.");
+      }
+
+      document.addEventListener("DOMContentLoaded", function() {
+        var urlParams = new URLSearchParams(window.location.search);
+        var check = urlParams.get("saved");
+        var savebtn = document.getElementById("savebtn");
+        var deltbtn= document.getElementById("delbtn");
+        var data;
+        if(check=="true"){
+            savebtn.style.display = 'none';
+            data = getSavedPlayerById(); 
+        }
+        else{
+          deltbtn.style.display='none';
+          data=getPlayerById();
+        }
+        
+        savebtn.onclick=function(){
+          data.then(function(player){
+            insertPlayer(player);
+          }); 
+          alert("Data tersimpan");
+        }
+
+        deltbtn.onclick=function(){
+          data.then(function(player){
+             deleteItem(player.id); 
+          });
+          alert("Data Deleted");
+        }
+      });
+    </script>
+    <script
+      type="text/javascript"
+      src="https://unpkg.com/snarkdown@1.0.2/dist/snarkdown.umd.js"
+    ></script>
+    <script src="js/materialize.min.js"></script>
+    <script src="js/api.js"></script>
+    <script type="js/dbmanager.js"></script>
+
+   <!--  <script>
+      // REGISTER SERVICE WORKER
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function() {
+          navigator.serviceWorker
+            .register("/service-worker.js")
+            .then(function() {
+              console.log("Pendaftaran ServiceWorker berhasil");
+            })
+            .catch(function() {
+              console.log("Pendaftaran ServiceWorker gagal");
+            });
+        });
+      } else {
+        console.log("ServiceWorker belum didukung browser ini.");
+      }
+      document.addEventListener("DOMContentLoaded", function() {
+        getAllPlayer();
+      });
+    </script> -->
+  </body>
+</html>
