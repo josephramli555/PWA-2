@@ -1,67 +1,75 @@
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js');
 const CACHE_NAME = "firstpwa-v1";
-var urlsToCache = [
-  "/",
-  "/nav.html",
-  "/index.html",
-  "/teamdetail.html",
-  "/playerdetail.html",
-  "/pages/home.html",
-  "/pages/about.html",
-  "/pages/contact.html",
-  "/pages/saved.html",
-  "/css/materialize.min.css",
-  "/js/materialize.min.js",
-  "/manifest.json",
-  "/js/nav.js",
-  "/js/api.js",
-  "/js/dbmanager.js",
-  "/js/idb.js",
-  "/main.js",
-  "/icon.png"
-];
 
-self.addEventListener("install", function(event) {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(function(cache) {
-      return cache.addAll(urlsToCache);
+
+
+workbox.precaching.precacheAndRoute([
+  {url:'/index.html',revision:'1'},
+  {url:'/teamdetail.html',revision:'1'},
+  {url:'/playerdetail.html',revision:'1'},
+  {url:'/pages/home.html',revision:'1'},
+  {url:'/pages/about.html',revision:'1'},
+  {url:'/pages/contact.html',revision:'1'},
+  {url:'/pages/saved.html',revision:'1'},
+  {url:'/css/materialize.min.css',revision:'1'},
+  {url:'/js/materialize.min.js',revision:'1'},
+  {url:'/manifest.json',revision:'1'},
+  {url:'/js/nav.js',revision:'1'},
+  {url:'/js/api.js',revision:'1'},
+  {url:'/js/dbmanager.js',revision:'1'},
+  {url:'/js/idb.js',revision:'1'},
+  {url:'/main.js',revision:'1'},
+  {url:'/icon.png',revision:'1'}
+]);
+
+
+
+workbox.routing.registerRoute(
+  new RegExp('/pages/'),
+    workbox.strategies.staleWhileRevalidate({
+        cacheName: 'pages'
     })
-  );
-});
+);
 
-self.addEventListener("fetch", function(event) {
-  var league_url="https://private-044be-dicodingfootball.apiary-mock.com/"
-  if (event.request.url.indexOf(league_url) > -1) {
-    event.respondWith(
-      caches.open(CACHE_NAME).then(function(cache) {
-        return fetch(event.request).then(function(response) {
-          cache.put(event.request.url, response.clone());
-          return response;
-        })
-      })
-    );
-  } else {
-    event.respondWith(
-      caches.match(event.request, { ignoreSearch: true }).then(function(response) {
-        return response || fetch (event.request);
-      })
-    )
-  }
-});
 
-self.addEventListener("activate", function(event) {
-  event.waitUntil(
-    caches.keys().then(function(cacheNames) {
-      return Promise.all(
-        cacheNames.map(function(cacheName) {
-          if (cacheName != CACHE_NAME) {
-            console.log("ServiceWorker: cache " + cacheName + " dihapus");
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
+workbox.routing.registerRoute(
+  /\.(?:png|gif|jpg|jpeg|svg)$/,
+  workbox.strategies.cacheFirst({
+    cacheName: 'images',
+  })
+);
+
+
+
+
+workbox.routing.registerRoute(
+  new RegExp('^https://private-044be-dicodingfootball.apiary-mock.com/'),
+  new workbox.strategies.CacheFirst({
+    cacheName: 'playerdata',
+    plugins: [
+      new workbox.cacheableResponse.Plugin({
+        statuses: [0, 200],
+      }),
+      
+    ]
+  })
+);
+
+
+workbox.routing.registerRoute(
+  new RegExp('^https://private-044be-dicodingfootball.apiary-mock.com/'),
+  new workbox.strategies.CacheFirst({
+    cacheName: 'playerdata',
+    plugins: [
+      new workbox.expiration.Plugin({
+        maxAgeSeconds: 24 * 60 * 60,
+      }),
+    ]
+  })
+
+
   );
-});
+  
 
 self.addEventListener('push', function(event) {
   var body;
