@@ -4,22 +4,22 @@ const CACHE_NAME = "firstpwa-v1";
 
 
 workbox.precaching.precacheAndRoute([
-  {url:'/index.html',revision:'1'},
-  {url:'/teamdetail.html',revision:'1'},
-  {url:'/playerdetail.html',revision:'1'},
-  {url:'/pages/home.html',revision:'1'},
-  {url:'/pages/about.html',revision:'1'},
-  {url:'/pages/contact.html',revision:'1'},
-  {url:'/pages/saved.html',revision:'1'},
-  {url:'/css/materialize.min.css',revision:'1'},
-  {url:'/js/materialize.min.js',revision:'1'},
+  {url:'/PWA-2/index.html',revision:'1'},
+  {url:'/PWA-2/teamdetail.html',revision:'1'},
+  {url:'/PWA-2/playerdetail.html',revision:'1'},
+  {url:'/PWA-2/pages/home.html',revision:'1'},
+  {url:'/PWA-2/pages/about.html',revision:'1'},
+  {url:'/PWA-2/pages/contact.html',revision:'1'},
+  {url:'/PWA-2/pages/saved.html',revision:'1'},
+  {url:'/PWA-2/css/materialize.min.css',revision:'1'},
+  {url:'/PWA-2/js/materialize.min.js',revision:'1'},
   {url:'/PWA-2/manifest.json',revision:'1'},
-  {url:'/js/nav.js',revision:'1'},
-  {url:'/js/api.js',revision:'1'},
-  {url:'/js/dbmanager.js',revision:'1'},
-  {url:'/js/idb.js',revision:'1'},
-  {url:'/main.js',revision:'1'},
-  {url:'/icon.png',revision:'1'}
+  {url:'/PWA-2/js/nav.js',revision:'1'},
+  {url:'/PWA-2/js/api.js',revision:'1'},
+  {url:'/PWA-2/js/dbmanager.js',revision:'1'},
+  {url:'/PWA-2/js/idb.js',revision:'1'},
+  {url:'/PWA-2/main.js',revision:'1'},
+  {url:'/PWA-2/icon.png',revision:'1'}
 ]);
 
 
