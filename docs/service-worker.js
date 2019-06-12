@@ -13,7 +13,7 @@ workbox.precaching.precacheAndRoute([
   {url:'/pages/saved.html',revision:'1'},
   {url:'/css/materialize.min.css',revision:'1'},
   {url:'/js/materialize.min.js',revision:'1'},
-  {url:'/manifest.json',revision:'1'},
+  {url:'/PWA-2/manifest.json',revision:'1'},
   {url:'/js/nav.js',revision:'1'},
   {url:'/js/api.js',revision:'1'},
   {url:'/js/dbmanager.js',revision:'1'},
